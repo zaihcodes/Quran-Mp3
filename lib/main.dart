@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:quran_mp3/core/services/theme/theme_data_provider.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter_bloc.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/screens/reciters_screen.dart';
 import 'package:quran_mp3/core/services/injection_dep/injection_containers.dart'
     as di;
+import 'package:quran_mp3/src/quran_audio/presentation/screens/surah_play_screen.dart';
 import 'package:quran_mp3/src/splash_screen.dart';
 
 void main() async {
@@ -23,11 +25,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Quran Audio Player',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeDataProvider.lightTheme,
         // home: const RecitersScreen(),
-        home: const SplashScreen(),
+        // home: const SplashScreen(),
+        home: const SurahPlayScreen(),
       ),
     );
   }

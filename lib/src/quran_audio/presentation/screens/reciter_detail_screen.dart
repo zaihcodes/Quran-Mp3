@@ -23,14 +23,15 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: theme.colorScheme.primaryContainer,
       body: BlocBuilder<ReciterBloc, ReciterState>(
         builder: (context, state) {
           if (state.status == ReciterStateStatus.loadingReciter) {
             return Center(
               child: CircularProgressIndicator(
-                color: AppColors.darkPrimaryColor,
+                color: theme.colorScheme.onPrimaryContainer,
               ),
             );
           } else if (state.status == ReciterStateStatus.loadedReciter) {
@@ -39,7 +40,7 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
                   margin: const EdgeInsets.only(bottom: 15),
-                  color: AppColors.darkPrimaryColor,
+                  color: theme.colorScheme.secondary,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -49,14 +50,14 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen> {
                         },
                         child: Icon(
                           Icons.arrow_back,
-                          color: AppColors.primaryColor,
+                          color: theme.colorScheme.onSecondary,
                         ),
                       ),
                       Text(
                         state.selectedReciter!.name,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: AppColors.primaryColor, fontSize: 20),
+                            color: theme.colorScheme.onSecondary, fontSize: 20),
                       )
                     ],
                   ),

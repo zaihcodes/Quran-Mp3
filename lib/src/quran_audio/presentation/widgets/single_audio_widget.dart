@@ -69,33 +69,34 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Stack(
       children: [
-        _buildAudioPlayerContainer(),
+        _buildAudioPlayerContainer(theme: theme),
         Positioned(
           right: 0,
-          child: _buildSurahInfoContainer(),
+          child: _buildSurahInfoContainer(theme: theme),
         ),
       ],
     );
   }
 
-  Widget _buildAudioPlayerContainer() {
+  Widget _buildAudioPlayerContainer({required ThemeData theme}) {
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.fromLTRB(20, 25, 20, 10),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color: theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.darkShadowColor,
+            color: theme.colorScheme.shadow.withOpacity(0.2),
             offset: const Offset(5, 4),
             spreadRadius: 1,
             blurRadius: 10,
           ),
           BoxShadow(
-            color: AppColors.lightShadowColor,
+            color: theme.colorScheme.background.withOpacity(0.3),
             offset: const Offset(-3, -4),
             spreadRadius: -2,
             blurRadius: 8,
@@ -104,14 +105,14 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       ),
       child: Row(
         children: [
-          _buildPlayerControl(),
+          _buildPlayerControl(theme: theme),
           Expanded(
             child: StreamBuilder<Duration?>(
               stream: _audioPlayer.positionStream,
               builder: (context, snapshot) {
                 final position = snapshot.data ?? Duration.zero;
                 final duration = _audioPlayer.duration ?? Duration.zero;
-                return _buildSlider(position, duration);
+                return _buildSlider(position, duration, theme);
               },
             ),
           ),
@@ -120,54 +121,54 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     );
   }
 
-  Widget _buildPlayerControl() {
+  Widget _buildPlayerControl({required ThemeData theme}) {
     return GestureDetector(
       onTap: _toggleAudioPlayer,
       child: Container(
         height: 40,
         width: 40,
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
+          color: theme.colorScheme.primaryContainer,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: AppColors.darkShadowColor,
+              color: theme.colorScheme.shadow.withOpacity(0.2),
               offset: const Offset(3, 8),
               spreadRadius: 3,
               blurRadius: 12,
             ),
-            const BoxShadow(
-              color: Colors.white,
-              offset: Offset(-3, -4),
+            BoxShadow(
+              color: theme.colorScheme.background.withOpacity(0.3),
+              offset: const Offset(-3, -4),
               spreadRadius: -2,
               blurRadius: 20,
             ),
           ],
         ),
-        child: _buildPlayerControlStack(),
+        child: _buildPlayerControlStack(theme: theme),
       ),
     );
   }
 
-  Widget _buildPlayerControlStack() {
+  Widget _buildPlayerControlStack({required ThemeData theme}) {
     return Stack(
       children: <Widget>[
         Center(
           child: Container(
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: AppColors.darkPrimaryColor,
+              color: theme.colorScheme.secondary,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.darkShadowColor,
+                  color: theme.colorScheme.shadow.withOpacity(0.2),
                   offset: const Offset(3, 8),
                   spreadRadius: 2,
                   blurRadius: 10,
                 ),
-                const BoxShadow(
-                  color: Colors.white,
-                  offset: Offset(-3, -4),
+                BoxShadow(
+                  color: theme.colorScheme.background.withOpacity(0.3),
+                  offset: const Offset(-3, -4),
                   spreadRadius: -2,
                   blurRadius: 20,
                 ),
@@ -179,14 +180,14 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
           child: Container(
             margin: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor,
+              color: theme.colorScheme.primaryContainer,
               shape: BoxShape.circle,
             ),
             child: Center(
               child: Icon(
                 _isPlaying ? Icons.pause : Icons.play_arrow,
                 size: 15,
-                color: AppColors.darkPrimaryColor,
+                color: theme.colorScheme.secondary,
               ),
             ),
           ),
@@ -195,12 +196,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     );
   }
 
-  Widget _buildSlider(Duration position, Duration duration) {
+  Widget _buildSlider(Duration position, Duration duration, ThemeData theme) {
     return Slider(
       value: position.inSeconds.toDouble(),
       max: duration.inSeconds.toDouble(),
-      activeColor: AppColors.darkPrimaryColor,
-      inactiveColor: AppColors.darkPrimaryColor.withOpacity(0.3),
+      activeColor: theme.colorScheme.secondary,
+      inactiveColor: theme.colorScheme.secondary.withOpacity(0.3),
       onChanged: (value) {
         final newPosition = Duration(seconds: value.toInt());
         _audioPlayer.seek(newPosition);
@@ -208,20 +209,20 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     );
   }
 
-  Widget _buildSurahInfoContainer() {
+  Widget _buildSurahInfoContainer({required ThemeData theme}) {
     return Container(
       width: 100,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
       decoration: BoxDecoration(
-        color: AppColors.darkPrimaryColor.withOpacity(0.5),
+        color: theme.colorScheme.onPrimaryContainer.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         'سورة ${widget.surah.name}',
         textAlign: TextAlign.end,
         textDirection: TextDirection.ltr,
-        style: TextStyle(color: AppColors.darkPrimaryColor),
+        style: TextStyle(color: theme.colorScheme.primaryContainer),
       ),
     );
   }

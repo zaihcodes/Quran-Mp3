@@ -10,9 +10,10 @@ class RecitersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: theme.colorScheme.primaryContainer,
       // appBar: AppBar(
       //   backgroundColor: AppColors.darkPrimaryColor,
       //   title: Row(
@@ -29,7 +30,8 @@ class RecitersScreen extends StatelessWidget {
         builder: (context, state) {
           if (state.status == ReciterStateStatus.loading) {
             return Center(
-              child: CircularProgressIndicator(color: AppColors.primaryColor),
+              child: CircularProgressIndicator(
+                  color: theme.colorScheme.onPrimaryContainer),
             );
           } else if (state.status == ReciterStateStatus.loaded ||
               state.status == ReciterStateStatus.loadedReciter ||
@@ -40,7 +42,7 @@ class RecitersScreen extends StatelessWidget {
                   height: size.height * 0.3,
                   padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
-                    color: AppColors.darkPrimaryColor,
+                    color: theme.colorScheme.secondary,
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight: Radius.circular(30)),
@@ -51,7 +53,8 @@ class RecitersScreen extends StatelessWidget {
                       children: [
                         Text(
                           'إبحت عن',
-                          style: TextStyle(color: AppColors.primaryColor),
+                          style:
+                              TextStyle(color: theme.colorScheme.onSecondary),
                         ),
                         const SizedBox(
                           height: 5,
@@ -59,7 +62,8 @@ class RecitersScreen extends StatelessWidget {
                         Text(
                           'قارئك المفضل',
                           style: TextStyle(
-                              color: AppColors.primaryColor, fontSize: 30),
+                              color: theme.colorScheme.onSecondary,
+                              fontSize: 30),
                         ),
                         const SizedBox(
                           height: 5,
@@ -69,7 +73,7 @@ class RecitersScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 15, right: 15),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 1, color: AppColors.primaryColor),
+                                width: 1, color: theme.colorScheme.onSecondary),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: TextField(
@@ -80,20 +84,21 @@ class RecitersScreen extends StatelessWidget {
                             },
                             textAlign: TextAlign.end,
                             textDirection: TextDirection.ltr,
-                            style: TextStyle(color: AppColors.primaryColor),
+                            style:
+                                TextStyle(color: theme.colorScheme.onSecondary),
                             cursorColor:
-                                AppColors.primaryColor.withOpacity(0.5),
+                                theme.colorScheme.onSecondary.withOpacity(0.5),
                             decoration: InputDecoration(
                                 hintText: 'القارء',
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                                 hintStyle: TextStyle(
-                                    color: AppColors.primaryColor
+                                    color: theme.colorScheme.onSecondary
                                         .withOpacity(0.5)),
                                 prefixIcon: Icon(
                                   Icons.search,
-                                  color:
-                                      AppColors.primaryColor.withOpacity(0.5),
+                                  color: theme.colorScheme.onSecondary
+                                      .withOpacity(0.5),
                                 )),
                           ),
                         )
@@ -131,6 +136,7 @@ class RecitersScreen extends StatelessWidget {
 
 Widget buildReciterWidget(
     {required BuildContext context, required Reciter reciter}) {
+  final theme = Theme.of(context);
   return GestureDetector(
     onTap: () {
       context.read<ReciterBloc>().add(GetReciterDetail(reciterId: reciter.id));
@@ -144,16 +150,16 @@ Widget buildReciterWidget(
       // margin: const EdgeInsets.fromLTRB(20, 10, 20, 5),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color: theme.colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-              color: AppColors.darkShadowColor,
+              color: theme.colorScheme.shadow.withOpacity(0.2),
               offset: const Offset(5, 4),
               spreadRadius: 1,
               blurRadius: 10),
           BoxShadow(
-              color: AppColors.lightShadowColor,
+              color: theme.colorScheme.background.withOpacity(0.3),
               offset: const Offset(-3, -4),
               spreadRadius: -2,
               blurRadius: 8)
