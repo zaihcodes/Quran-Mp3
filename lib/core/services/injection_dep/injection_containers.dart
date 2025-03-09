@@ -4,7 +4,8 @@ import 'package:quran_mp3/src/quran_audio/data/repositories/reciter_repository_i
 import 'package:quran_mp3/src/quran_audio/domain/repositories/reciter_repository.dart';
 import 'package:quran_mp3/src/quran_audio/domain/usecases/reciter_detail_usecase.dart';
 import 'package:quran_mp3/src/quran_audio/domain/usecases/reciters_info_usecase.dart';
-import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter_bloc.dart';
+import 'package:quran_mp3/src/quran_audio/presentation/bloc/player/player_bloc.dart';
+import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -23,4 +24,7 @@ Future<void> init() async {
   // Data Source
   sl.registerLazySingleton<ReciterLocalDataSource>(
       () => ReciterLocalDataSourceImpl());
+
+  // Audio
+  sl.registerFactory(() => AudioBloc(audioList: sl()));
 }
