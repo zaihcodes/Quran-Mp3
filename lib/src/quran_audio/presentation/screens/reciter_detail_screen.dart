@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran_mp3/core/services/theme/app_colors.dart';
-import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter_bloc.dart';
+import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc.dart';
 import 'package:quran_mp3/core/services/audio_player_service.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/widgets/single_audio_widget.dart';
 
