@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:quran_mp3/core/services/theme/app_colors.dart';
 import 'package:quran_mp3/src/quran_audio/domain/entities/surah_audio.dart';
+import 'package:quran_mp3/src/quran_audio/presentation/bloc/player/player_bloc.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
   final SurahAudio surah;
@@ -75,7 +77,11 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         _buildAudioPlayerContainer(theme: theme),
         Positioned(
           right: 0,
-          child: _buildSurahInfoContainer(theme: theme),
+          child: GestureDetector(
+              onTap: () {
+                context.read<AudioBloc>().add(Play());
+              },
+              child: _buildSurahInfoContainer(theme: theme)),
         ),
       ],
     );
