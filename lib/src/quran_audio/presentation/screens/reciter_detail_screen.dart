@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quran_mp3/core/services/theme/app_colors.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc.dart';
 import 'package:quran_mp3/core/services/audio_player_service.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/widgets/single_audio_widget.dart';
+import 'package:quran_mp3/src/quran_audio/presentation/widgets/error_widget.dart';
 
 class ReciterDetailScreen extends StatefulWidget {
   const ReciterDetailScreen({super.key});
@@ -59,16 +59,33 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen>
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
-      body: BlocBuilder<ReciterBloc, ReciterState>(
-        builder: (context, state) {
-          if (state.status == ReciterStateStatus.loadingReciter) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: theme.colorScheme.primary,
-              ),
+      backgroundColor: theme.colorScheme.surface,
+      body: BlocListener<ReciterBloc, ReciterState>(
+        listener: (context, state) {
+          // Show error snackbar for non-critical errors
+          if (state.status == ReciterStateStatus.error) {
+            ErrorSnackBar.show(
+              context,
+              state.errorMessage ?? 'حدث خطأ أثناء تحميل تفاصيل القارئ',
             );
-          } else if (state.status == ReciterStateStatus.loadedReciter) {
+          }
+        },
+        child: BlocBuilder<ReciterBloc, ReciterState>(
+          builder: (context, state) {
+            if (state.status == ReciterStateStatus.loadingReciter) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: theme.colorScheme.primary,
+                ),
+              );
+            } else if (state.status == ReciterStateStatus.error) {
+              return DataErrorWidget(
+                errorMessage: state.errorMessage,
+                onRetry: () {
+                  Navigator.of(context).pop(); // Go back to reciter list
+                },
+              );
+            } else if (state.status == ReciterStateStatus.loadedReciter) {
             return CustomScrollView(
               controller: _scrollController,
               slivers: [
@@ -92,7 +109,7 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen>
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            theme.colorScheme.primary.withOpacity(0.1),
+                            theme.colorScheme.primary.withValues(alpha: 0.1),
                             theme.colorScheme.surface,
                           ],
                         ),
@@ -111,7 +128,7 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen>
                                 boxShadow: [
                                   BoxShadow(
                                     color: theme.colorScheme.shadow
-                                        .withOpacity(0.1),
+                                        .withValues(alpha: 0.1),
                                     blurRadius: 20,
                                     offset: const Offset(0, 10),
                                   ),
@@ -137,7 +154,7 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen>
                               state.selectedReciter!.rewaya,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.onSurface
-                                    .withOpacity(0.7),
+                                    .withValues(alpha: 0.7),
                               ),
                             ),
                           ],
@@ -155,7 +172,7 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen>
                           'السور',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.onBackground,
+                            color: theme.colorScheme.onSurface,
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -204,7 +221,8 @@ class _ReciterDetailScreenState extends State<ReciterDetailScreen>
               style: theme.textTheme.titleMedium,
             ),
           );
-        },
+          },
+        ),
       ),
     );
   }

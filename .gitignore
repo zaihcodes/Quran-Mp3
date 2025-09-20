@@ -11,6 +11,7 @@
 migrate_working_dir/
 
 **/.cxx
+.claude/
 # IntelliJ related
 *.iml
 *.ipr

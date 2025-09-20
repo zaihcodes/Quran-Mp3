@@ -110,7 +110,7 @@ class _SurahWidgetState extends State<SurahWidget> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: AppColors.darkPrimaryColor.withOpacity(0.5),
+                          color: AppColors.darkPrimaryColor.withValues(alpha: 0.5),
                           offset: const Offset(5, 10),
                           spreadRadius: 3,
                           blurRadius: 10),
@@ -132,7 +132,7 @@ class _SurahWidgetState extends State<SurahWidget> {
                               boxShadow: [
                                 BoxShadow(
                                     color: AppColors.darkPrimaryColor
-                                        .withOpacity(0.5),
+                                        .withValues(alpha: 0.5),
                                     offset: const Offset(5, 10),
                                     spreadRadius: 3,
                                     blurRadius: 10),
@@ -174,7 +174,7 @@ class _SurahWidgetState extends State<SurahWidget> {
                       max: duration.inSeconds.toDouble(),
                       activeColor: AppColors.darkPrimaryColor,
                       inactiveColor:
-                          AppColors.darkPrimaryColor.withOpacity(0.3),
+                          AppColors.darkPrimaryColor.withValues(alpha: 0.3),
                       onChanged: (value) {
                         final newPosition = Duration(seconds: value.toInt());
                         _audioPlayer.seek(newPosition);
@@ -194,7 +194,7 @@ class _SurahWidgetState extends State<SurahWidget> {
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
             decoration: BoxDecoration(
-              color: AppColors.darkPrimaryColor.withOpacity(0.5),
+              color: AppColors.darkPrimaryColor.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
@@ -222,7 +222,7 @@ Widget buildPlayerControl(
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-              color: AppColors.darkPrimaryColor.withOpacity(0.5),
+              color: AppColors.darkPrimaryColor.withValues(alpha: 0.5),
               offset: const Offset(5, 10),
               spreadRadius: 3,
               blurRadius: 10),
@@ -243,7 +243,7 @@ Widget buildPlayerControl(
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                        color: AppColors.darkPrimaryColor.withOpacity(0.5),
+                        color: AppColors.darkPrimaryColor.withValues(alpha: 0.5),
                         offset: const Offset(5, 10),
                         spreadRadius: 3,
                         blurRadius: 10),

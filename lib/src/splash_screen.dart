@@ -18,15 +18,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _navigateToRecitersScreen() async {
-    Future.delayed(
-        const Duration(milliseconds: 500),
-        () => {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const RecitersScreen()),
-                  (route) => false)
-            });
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (mounted) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const RecitersScreen()),
+          (route) => false);
+    }
   }
 
   @override

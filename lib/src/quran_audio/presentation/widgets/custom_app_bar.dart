@@ -46,12 +46,12 @@ class NavBarItem extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-                color: theme.colorScheme.shadow.withOpacity(0.2),
+                color: theme.colorScheme.shadow.withValues(alpha: 0.2),
                 offset: const Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
             BoxShadow(
-                color: theme.colorScheme.background.withOpacity(0.3),
+                color: theme.colorScheme.surface.withValues(alpha: 0.3),
                 offset: const Offset(-3, -4),
                 spreadRadius: -2,
                 blurRadius: 20)

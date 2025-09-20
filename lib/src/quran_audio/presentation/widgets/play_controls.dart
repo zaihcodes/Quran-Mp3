@@ -48,12 +48,12 @@ class PlayControl extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: theme.colorScheme.shadow.withOpacity(0.2),
+                color: theme.colorScheme.shadow.withValues(alpha: 0.2),
                 offset: const Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
             BoxShadow(
-                color: theme.colorScheme.background.withOpacity(0.5),
+                color: theme.colorScheme.surface.withValues(alpha: 0.5),
                 offset: const Offset(-3, -4),
                 spreadRadius: -2,
                 blurRadius: 20)
@@ -69,12 +69,12 @@ class PlayControl extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: theme.colorScheme.shadow.withOpacity(0.2),
+                          color: theme.colorScheme.shadow.withValues(alpha: 0.2),
                           offset: const Offset(5, 10),
                           spreadRadius: 3,
                           blurRadius: 10),
                       BoxShadow(
-                          color: theme.colorScheme.background.withOpacity(0.5),
+                          color: theme.colorScheme.surface.withValues(alpha: 0.5),
                           offset: const Offset(-3, -4),
                           spreadRadius: -2,
                           blurRadius: 20)
@@ -120,12 +120,12 @@ class Controls extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-              color: theme.colorScheme.shadow.withOpacity(0.2),
+              color: theme.colorScheme.shadow.withValues(alpha: 0.2),
               offset: const Offset(5, 10),
               spreadRadius: 3,
               blurRadius: 10),
           BoxShadow(
-              color: theme.colorScheme.background.withOpacity(0.5),
+              color: theme.colorScheme.surface.withValues(alpha: 0.5),
               offset: const Offset(-3, -4),
               spreadRadius: -2,
               blurRadius: 20)
@@ -141,12 +141,12 @@ class Controls extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                        color: theme.colorScheme.shadow.withOpacity(0.2),
+                        color: theme.colorScheme.shadow.withValues(alpha: 0.2),
                         offset: const Offset(5, 10),
                         spreadRadius: 3,
                         blurRadius: 10),
                     BoxShadow(
-                        color: theme.colorScheme.background.withOpacity(0.5),
+                        color: theme.colorScheme.surface.withValues(alpha: 0.5),
                         offset: const Offset(-3, -4),
                         spreadRadius: -2,
                         blurRadius: 20)

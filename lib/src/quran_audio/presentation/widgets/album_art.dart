@@ -16,12 +16,12 @@ class AlbumArt extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-              color: theme.colorScheme.shadow.withOpacity(0.2),
+              color: theme.colorScheme.shadow.withValues(alpha: 0.2),
               offset: const Offset(20, 8),
               spreadRadius: 3,
               blurRadius: 25),
           BoxShadow(
-              color: theme.colorScheme.background.withOpacity(0.3),
+              color: theme.colorScheme.surface.withValues(alpha: 0.3),
               offset: const Offset(-3, -4),
               spreadRadius: -2,
               blurRadius: 20)

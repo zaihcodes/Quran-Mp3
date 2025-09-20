@@ -12,7 +12,7 @@ class PageEntity {
 class AppRouter {
   static List<PageEntity> routes() => [
         PageEntity(
-            route: AppRoutes.QURAN_MP3, page: Container()), // Bloc instance
+            route: AppRoutes.quranMp3, page: Container()), // Bloc instance
       ];
 
   // App Routes

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quran_mp3/core/services/theme/app_colors.dart';
 import 'package:quran_mp3/src/quran_audio/domain/entities/reciter.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/screens/reciter_detail_screen.dart';
+import 'package:quran_mp3/src/quran_audio/presentation/widgets/error_widget.dart';
 
 class RecitersScreen extends StatefulWidget {
   const RecitersScreen({super.key});
@@ -55,14 +55,29 @@ class _RecitersScreenState extends State<RecitersScreen> with SingleTickerProvid
     final size = MediaQuery.of(context).size;
     
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
-      body: BlocBuilder<ReciterBloc, ReciterState>(
-        builder: (context, state) {
+      backgroundColor: theme.colorScheme.surface,
+      body: BlocListener<ReciterBloc, ReciterState>(
+        listener: (context, state) {
+          // Show snackbar for non-critical errors or success messages
+          if (state.status == ReciterStateStatus.error &&
+              state.errorCode == 'FILTER_ERROR') {
+            ErrorSnackBar.show(context, state.errorMessage ?? 'حدث خطأ أثناء البحث');
+          }
+        },
+        child: BlocBuilder<ReciterBloc, ReciterState>(
+          builder: (context, state) {
           if (state.status == ReciterStateStatus.loading) {
             return Center(
               child: CircularProgressIndicator(
                 color: theme.colorScheme.primary,
               ),
+            );
+          } else if (state.status == ReciterStateStatus.error) {
+            return DataErrorWidget(
+              errorMessage: state.errorMessage,
+              onRetry: () {
+                context.read<ReciterBloc>().add(GetAllRecitersInfo());
+              },
             );
           } else if (state.status == ReciterStateStatus.loaded ||
               state.status == ReciterStateStatus.loadedReciter ||
@@ -84,7 +99,7 @@ class _RecitersScreenState extends State<RecitersScreen> with SingleTickerProvid
                           end: Alignment.bottomCenter,
                           colors: [
                             theme.colorScheme.primary,
-                            theme.colorScheme.primary.withOpacity(0.8),
+                            theme.colorScheme.primary.withValues(alpha: 0.8),
                           ],
                         ),
                       ),
@@ -120,7 +135,7 @@ class _RecitersScreenState extends State<RecitersScreen> with SingleTickerProvid
                                   borderRadius: BorderRadius.circular(16),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
+                                      color: Colors.black.withValues(alpha: 0.1),
                                       blurRadius: 10,
                                       offset: const Offset(0, 5),
                                     ),
@@ -140,7 +155,7 @@ class _RecitersScreenState extends State<RecitersScreen> with SingleTickerProvid
                                     hintText: 'البحث عن القارئ',
                                     hintStyle: TextStyle(
                                       color: theme.colorScheme.onSurface
-                                          .withOpacity(0.5),
+                                          .withValues(alpha: 0.5),
                                     ),
                                     prefixIcon: Icon(
                                       Icons.search_rounded,
@@ -198,10 +213,12 @@ class _RecitersScreenState extends State<RecitersScreen> with SingleTickerProvid
               style: theme.textTheme.titleLarge,
             ),
           );
-        },
+          },
+        ),
       ),
     );
   }
+
 }
 
 Widget buildReciterCard({
@@ -231,7 +248,7 @@ Widget buildReciterCard({
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: theme.colorScheme.shadow.withOpacity(0.08),
+              color: theme.colorScheme.shadow.withValues(alpha: 0.08),
               offset: const Offset(0, 4),
               blurRadius: 12,
             ),
@@ -245,7 +262,7 @@ Widget buildReciterCard({
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: theme.colorScheme.primaryContainer.withOpacity(0.2),
+                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -273,7 +290,7 @@ Widget buildReciterCard({
               textDirection: TextDirection.rtl,
               style: TextStyle(
                 fontSize: 13,
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

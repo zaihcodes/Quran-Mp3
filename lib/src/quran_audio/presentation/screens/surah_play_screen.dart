@@ -62,7 +62,7 @@ class SurahPlayScreen extends StatelessWidget {
                       value: 0,
                       activeColor: theme.colorScheme.secondary,
                       inactiveColor:
-                          theme.colorScheme.secondary.withOpacity(0.3),
+                          theme.colorScheme.secondary.withValues(alpha: 0.3),
                       onChanged: (value) {
                         // myAudioModel
                         //     .seekAudio(Duration(milliseconds: value.toInt()));

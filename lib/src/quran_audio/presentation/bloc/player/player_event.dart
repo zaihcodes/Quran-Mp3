@@ -36,3 +36,24 @@ class PlayerStateChanged extends AudioEvent {
   final PlayerState? playerState;
   PlayerStateChanged({required this.playerState});
 }
+
+class LoadAudio extends AudioEvent {
+  final String audioUrl;
+
+  LoadAudio({required this.audioUrl});
+
+  @override
+  List<Object> get props => [audioUrl];
+}
+
+class AudioError extends AudioEvent {
+  final String message;
+  final String? code;
+
+  AudioError({required this.message, this.code});
+
+  @override
+  List<Object> get props => [message, code ?? ''];
+}
+
+class ClearError extends AudioEvent {}
