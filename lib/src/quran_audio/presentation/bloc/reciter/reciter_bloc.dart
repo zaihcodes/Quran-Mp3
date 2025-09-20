@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:quran_mp3/src/quran_audio/domain/entities/reciter.dart';
+import 'package:quran_mp3/src/quran_audio/domain/entities/grouped_reciter.dart';
 import 'package:quran_mp3/src/quran_audio/domain/usecases/reciter_detail_usecase.dart';
 import 'package:quran_mp3/src/quran_audio/domain/usecases/reciters_info_usecase.dart';
+import 'package:quran_mp3/src/quran_audio/domain/usecases/grouped_reciters_usecase.dart';
 import 'package:quran_mp3/core/error/exceptions.dart';
 
 part 'reciter_event.dart';
@@ -11,12 +13,17 @@ part 'reciter_state.dart';
 class ReciterBloc extends Bloc<ReciterEvent, ReciterState> {
   final RecitersInfoUsecase recitersInfoUsecase;
   final ReciterDetailUsecase reciterDetailUsecase;
+  final GroupedRecitersUsecase groupedRecitersUsecase;
 
-  ReciterBloc(
-      {required this.reciterDetailUsecase, required this.recitersInfoUsecase})
-      : super(const ReciterState(status: ReciterStateStatus.initial)) {
+  ReciterBloc({
+    required this.reciterDetailUsecase,
+    required this.recitersInfoUsecase,
+    required this.groupedRecitersUsecase,
+  }) : super(const ReciterState(status: ReciterStateStatus.initial)) {
     on<GetAllRecitersInfo>(_getAllRecitersInfo);
+    on<GetGroupedReciters>(_getGroupedReciters);
     on<FilterRecitersInfo>(_filterRecitersInfo);
+    on<FilterGroupedReciters>(_filterGroupedReciters);
     on<GetReciterDetail>(_getReciterDetail);
   }
 
@@ -46,6 +53,76 @@ class ReciterBloc extends Bloc<ReciterEvent, ReciterState> {
         status: ReciterStateStatus.error,
         errorMessage: 'حدث خطأ غير متوقع أثناء تحميل القراء',
         errorCode: 'UNEXPECTED_ERROR',
+      ));
+    }
+  }
+
+  void _getGroupedReciters(
+      GetGroupedReciters event, Emitter<ReciterState> emit) async {
+    emit(state.copyWith(
+      status: ReciterStateStatus.loadingGrouped,
+      clearError: true,
+    ));
+
+    try {
+      final groupedReciters = await groupedRecitersUsecase();
+      emit(state.copyWith(
+        status: ReciterStateStatus.loadedGrouped,
+        groupedReciters: groupedReciters,
+        filteredGroupedReciters: groupedReciters,
+        clearError: true,
+      ));
+    } on AppException catch (e) {
+      emit(state.copyWith(
+        status: ReciterStateStatus.error,
+        errorMessage: _getUserFriendlyErrorMessage(e),
+        errorCode: e.code,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: ReciterStateStatus.error,
+        errorMessage: 'حدث خطأ غير متوقع أثناء تحميل القراء المجمعة',
+        errorCode: 'UNEXPECTED_ERROR',
+      ));
+    }
+  }
+
+  void _filterGroupedReciters(
+      FilterGroupedReciters event, Emitter<ReciterState> emit) async {
+    try {
+      if (state.groupedReciters.isEmpty) {
+        emit(state.copyWith(
+          status: ReciterStateStatus.error,
+          errorMessage: 'لا توجد بيانات للقراء المجمعة للبحث فيها',
+          errorCode: 'NO_GROUPED_DATA_TO_FILTER',
+        ));
+        return;
+      }
+
+      final query = event.query.trim().toLowerCase();
+
+      if (query.isEmpty) {
+        emit(state.copyWith(
+          status: ReciterStateStatus.loadedGrouped,
+          filteredGroupedReciters: state.groupedReciters,
+          clearError: true,
+        ));
+      } else {
+        final filteredGroupedReciters = state.groupedReciters
+            .where((gr) => gr.name.toLowerCase().contains(query))
+            .toList();
+
+        emit(state.copyWith(
+          status: ReciterStateStatus.loadedGrouped,
+          filteredGroupedReciters: filteredGroupedReciters,
+          clearError: true,
+        ));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        status: ReciterStateStatus.error,
+        errorMessage: 'حدث خطأ أثناء البحث في القراء المجمعة',
+        errorCode: 'FILTER_GROUPED_ERROR',
       ));
     }
   }

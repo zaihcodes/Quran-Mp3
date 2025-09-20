@@ -236,7 +236,7 @@ Widget buildReciterCard({
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ReciterDetailScreen(),
+            builder: (context) => ReciterDetailScreen(reciter: reciter),
           ),
         );
       },

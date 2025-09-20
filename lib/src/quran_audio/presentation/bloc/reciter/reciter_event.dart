@@ -6,6 +6,8 @@ abstract class ReciterEvent {
 
 class GetAllRecitersInfo extends ReciterEvent {}
 
+class GetGroupedReciters extends ReciterEvent {}
+
 class GetReciterDetail extends ReciterEvent {
   final int reciterId;
   const GetReciterDetail({required this.reciterId});
@@ -14,4 +16,9 @@ class GetReciterDetail extends ReciterEvent {
 class FilterRecitersInfo extends ReciterEvent {
   final String query;
   const FilterRecitersInfo({required this.query});
+}
+
+class FilterGroupedReciters extends ReciterEvent {
+  final String query;
+  const FilterGroupedReciters({required this.query});
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quran_mp3/core/services/theme/app_colors.dart';
-import 'package:quran_mp3/src/quran_audio/presentation/screens/reciters_screen.dart';
+import 'package:quran_mp3/src/quran_audio/presentation/screens/grouped_reciters_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const RecitersScreen()),
+              builder: (context) => const GroupedRecitersScreen()),
           (route) => false);
     }
   }

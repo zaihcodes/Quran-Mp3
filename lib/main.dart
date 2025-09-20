@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => di.sl<ReciterBloc>()..add(GetAllRecitersInfo()),
+      create: (context) => di.sl<ReciterBloc>()..add(GetGroupedReciters()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Quran Audio Player',

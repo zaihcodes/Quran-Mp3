@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quran_mp3/src/quran_audio/domain/entities/reciter.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc.dart';
 import 'package:quran_mp3/core/services/audio_player_service.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/widgets/single_audio_widget.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/widgets/error_widget.dart';
 
 class ReciterDetailScreen extends StatefulWidget {
-  const ReciterDetailScreen({super.key});
+  final Reciter reciter;
+
+  const ReciterDetailScreen({
+    super.key,
+    required this.reciter,
+  });
 
   @override
   State<ReciterDetailScreen> createState() => _ReciterDetailScreenState();
