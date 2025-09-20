@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quran_mp3/core/services/theme/theme_data_provider.dart';
+import 'package:quran_mp3/core/services/theme/modern_theme.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc.dart';
 import 'package:quran_mp3/core/services/injection_dep/injection_containers.dart'
     as di;
-import 'package:quran_mp3/src/splash_screen.dart';
+import 'package:quran_mp3/src/modern_splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Set system UI overlay style
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+
   await di.init();
   runApp(const MyApp());
 }
@@ -22,10 +34,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Quran Audio Player',
-        theme: ThemeDataProvider.lightTheme,
-        // home: const RecitersScreen(),
-        home: const SplashScreen(),
-        // home: const SurahPlayScreen(),
+        theme: ModernTheme.lightTheme,
+        home: const ModernSplashScreen(),
       ),
     );
   }
