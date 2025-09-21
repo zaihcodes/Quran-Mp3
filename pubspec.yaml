@@ -15,6 +15,7 @@ dependencies:
   flutter_bloc: ^8.1.4
   get_it: ^7.6.7
   just_audio: ^0.9.36
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

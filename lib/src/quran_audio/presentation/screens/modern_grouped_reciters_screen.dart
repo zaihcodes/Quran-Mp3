@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quran_mp3/core/services/injection_dep/injection_containers.dart' as di;
+import 'package:quran_mp3/core/services/injection_dep/injection_containers.dart'
+    as di;
 import 'package:quran_mp3/core/services/theme/app_colors_modern.dart';
 import 'package:quran_mp3/core/widgets/glass_card.dart';
 import 'package:quran_mp3/core/widgets/animated_widgets.dart';
@@ -9,16 +10,18 @@ import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc
 import 'package:quran_mp3/src/quran_audio/presentation/screens/modern_rewaya_selection_screen.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/screens/reciter_detail_screen.dart';
 import 'package:quran_mp3/src/quran_audio/presentation/widgets/error_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ModernGroupedRecitersScreen extends StatefulWidget {
   const ModernGroupedRecitersScreen({super.key});
 
   @override
-  State<ModernGroupedRecitersScreen> createState() => _ModernGroupedRecitersScreenState();
+  State<ModernGroupedRecitersScreen> createState() =>
+      _ModernGroupedRecitersScreenState();
 }
 
-class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScreen>
-    with TickerProviderStateMixin {
+class _ModernGroupedRecitersScreenState
+    extends State<ModernGroupedRecitersScreen> with TickerProviderStateMixin {
   late AnimationController _backgroundController;
   late Animation<double> _backgroundAnimation;
 
@@ -113,7 +116,8 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              transform: GradientRotation(_backgroundAnimation.value * 2 * 3.14159),
+              transform:
+                  GradientRotation(_backgroundAnimation.value * 2 * 3.14159),
               colors: [
                 ModernAppColors.backgroundPrimary,
                 ModernAppColors.backgroundSecondary,
@@ -130,7 +134,7 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
 
   Widget _buildModernAppBar(Size size) {
     return SliverAppBar(
-      expandedHeight: size.height * 0.35,
+      expandedHeight: size.height * 0.35.h,
       floating: false,
       pinned: true,
       elevation: 0,
@@ -164,7 +168,8 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
                             gradient: ModernAppColors.accentGradient,
                             boxShadow: [
                               BoxShadow(
-                                color: ModernAppColors.accent.withValues(alpha: 0.4),
+                                color: ModernAppColors.accent
+                                    .withValues(alpha: 0.4),
                                 blurRadius: 30,
                                 spreadRadius: 5,
                               ),
@@ -185,7 +190,10 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
                         delay: const Duration(milliseconds: 300),
                         child: Text(
                           'القرآن الكريم',
-                          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 1.2,
@@ -208,11 +216,12 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
                         delay: const Duration(milliseconds: 500),
                         child: Text(
                           'استمع للقرآن الكريم بأصوات أجمل القراء',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Colors.white.withValues(alpha: 0.9),
-                            fontSize: 16,
-                            height: 1.5,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white.withValues(alpha: 0.9),
+                                    fontSize: 16,
+                                    height: 1.5,
+                                  ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -303,7 +312,9 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
             child: TextField(
               controller: _searchController,
               onChanged: (query) {
-                context.read<ReciterBloc>().add(FilterGroupedReciters(query: query));
+                context
+                    .read<ReciterBloc>()
+                    .add(FilterGroupedReciters(query: query));
               },
               style: const TextStyle(
                 fontSize: 16,
@@ -312,14 +323,14 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
               ),
               decoration: InputDecoration(
                 hintText: 'ابحث عن القراء...',
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                   color: ModernAppColors.textTertiary,
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
                 prefixIcon: Container(
                   margin: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: ModernAppColors.accentGradient,
                   ),
@@ -337,12 +348,15 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
                         ),
                         onPressed: () {
                           _searchController.clear();
-                          context.read<ReciterBloc>().add(const FilterGroupedReciters(query: ''));
+                          context
+                              .read<ReciterBloc>()
+                              .add(const FilterGroupedReciters(query: ''));
                         },
                       )
                     : null,
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               ),
             ),
           ),
@@ -370,7 +384,7 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
           children: List.generate(6, (index) {
             return Container(
               margin: const EdgeInsets.only(bottom: 16),
-              child: ShimmerLoading(
+              child: const ShimmerLoading(
                 width: double.infinity,
                 height: 100,
                 borderRadius: 20,
@@ -447,16 +461,16 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
             Text(
               'لم يتم العثور على قراء',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: ModernAppColors.textSecondary,
-                fontWeight: FontWeight.w600,
-              ),
+                    color: ModernAppColors.textSecondary,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
             const SizedBox(height: 12),
             Text(
               'حاول البحث بطريقة مختلفة',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: ModernAppColors.textTertiary,
-              ),
+                    color: ModernAppColors.textTertiary,
+                  ),
             ),
           ],
         ),
@@ -482,10 +496,10 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
         padding: const EdgeInsets.all(20),
         onTap: () => _handleReciterTap(groupedReciter),
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: ModernAppColors.shadowLight,
             blurRadius: 20,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
             spreadRadius: -5,
           ),
           BoxShadow(
@@ -521,10 +535,10 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
                 child: Text(
                   groupedReciter.letter,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 24,
-                  ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24,
+                      ),
                 ),
               ),
             ),
@@ -539,21 +553,23 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
                   Text(
                     groupedReciter.name,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: ModernAppColors.textPrimary,
-                      fontSize: 18,
-                    ),
+                          fontWeight: FontWeight.w700,
+                          color: ModernAppColors.textPrimary,
+                          fontSize: 18,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       gradient: LinearGradient(
                         colors: groupedReciter.hasMultipleRewayas
                             ? [
                                 ModernAppColors.accent.withValues(alpha: 0.2),
-                                ModernAppColors.accentLight.withValues(alpha: 0.1),
+                                ModernAppColors.accentLight
+                                    .withValues(alpha: 0.1),
                               ]
                             : [
                                 ModernAppColors.sage.withValues(alpha: 0.2),
@@ -578,13 +594,14 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
                           groupedReciter.hasMultipleRewayas
                               ? '${groupedReciter.totalRewayas} روايات'
                               : groupedReciter.mainRewaya,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: groupedReciter.hasMultipleRewayas
-                                ? ModernAppColors.accent
-                                : ModernAppColors.sage,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: groupedReciter.hasMultipleRewayas
+                                        ? ModernAppColors.accent
+                                        : ModernAppColors.sage,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
                         ),
                       ],
                     ),
@@ -640,6 +657,11 @@ class _ModernGroupedRecitersScreenState extends State<ModernGroupedRecitersScree
             Expanded(
               child: TextField(
                 controller: _searchController,
+                onChanged: (query) {
+                  context
+                      .read<ReciterBloc>()
+                      .add(FilterGroupedReciters(query: query));
+                },
                 decoration: const InputDecoration(
                   hintText: 'البحث السريع...',
                   border: InputBorder.none,

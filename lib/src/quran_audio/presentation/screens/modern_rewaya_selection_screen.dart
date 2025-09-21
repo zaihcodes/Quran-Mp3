@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quran_mp3/core/services/injection_dep/injection_containers.dart'
     as di;
 import 'package:quran_mp3/core/services/theme/app_colors_modern.dart';
@@ -163,7 +164,7 @@ class _ModernRewayaSelectionScreenState
   Widget _buildHeroHeader(Size size) {
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: size.height * 0.42,
+        height: size.height * 0.35.h,
         child: Stack(
           children: [
             // Background gradient

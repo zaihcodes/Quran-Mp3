@@ -6,6 +6,7 @@ import 'package:quran_mp3/src/quran_audio/presentation/bloc/reciter/reciter_bloc
 import 'package:quran_mp3/core/services/injection_dep/injection_containers.dart'
     as di;
 import 'package:quran_mp3/src/modern_splash_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,13 +30,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<ReciterBloc>()..add(GetGroupedReciters()),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Quran Audio Player',
-        theme: ModernTheme.lightTheme,
-        home: const ModernSplashScreen(),
+    return ScreenUtilInit(
+      child: BlocProvider(
+        create: (context) => di.sl<ReciterBloc>()..add(GetGroupedReciters()),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Quran Audio Player',
+          theme: ModernTheme.lightTheme,
+          home: const ModernSplashScreen(),
+        ),
       ),
     );
   }
