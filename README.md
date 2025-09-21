@@ -21,4 +21,8 @@ Immerse yourself in a simple yet powerful Flutter app designed to explore and li
 
 Screenshots:
 
-![my screenshot](./screenshots/Screenshot.png)
+| ![Light 1](screenshots/Screenshot_1.png) | ![Light 2](screenshots/Screenshot_2.png) |
+|:--:|:--:|
+| ![Light 3](screenshots/Screenshot_3.png) | ![Light 4](screenshots/Screenshot_4.png) |
+|:--:|:--:|
+![Light 4](screenshots/Screenshot_4.png)
